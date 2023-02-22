@@ -1,6 +1,20 @@
-Traceback (most recent call last):
-  File "/home/rudra/Documents/Provisioner/messenger.py", line 98, in <module>
-    socketio.run(app, debug=True, port=5300, host="0.0.0.0", use_reloader=False)
-  File "/home/rudra/Documents/Provisioner/venv/lib/python3.10/site-packages/flask_socketio/__init__.py", line 641, in run
-    raise RuntimeError('The Werkzeug web server is not '
-RuntimeError: The Werkzeug web server is not designed to run in production. Pass allow_unsafe_werkzeug=True to the run() method to disable this error.
+Werkzeug appears to be used in a production deployment. Consider switching to a production web server instead.
+ * Serving Flask app 'messenger'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5300
+ * Running on http://10.99.115.211:5300
+[33mPress CTRL+C to quit[0m
+10.215.122.77 - - [23/Feb/2023 03:16:48] "GET /socket.io/?EIO=4&transport=polling&t=OPx67OW HTTP/1.1" 200 -
+10.215.122.77 - - [23/Feb/2023 03:16:48] "POST /socket.io/?EIO=4&transport=polling&t=OPx67P2&sid=LKWJAjRivzPcI0d4AAAA HTTP/1.1" 200 -
+10.215.122.77 - - [23/Feb/2023 03:16:48] "GET /socket.io/?EIO=4&transport=polling&t=OPx67P5&sid=LKWJAjRivzPcI0d4AAAA HTTP/1.1" 200 -
+10.215.122.77 - - [23/Feb/2023 03:16:48] "GET /socket.io/?EIO=4&transport=polling&t=OPx67Pg&sid=LKWJAjRivzPcI0d4AAAA HTTP/1.1" 200 -
+10.215.122.77 - - [23/Feb/2023 03:16:54] "GET / HTTP/1.1" 200 -
+10.215.122.77 - - [23/Feb/2023 03:16:54] "GET /socket.io/?EIO=4&transport=websocket&sid=LKWJAjRivzPcI0d4AAAA HTTP/1.1" 200 -
+10.215.122.77 - - [23/Feb/2023 03:16:54] "[36mGET /dashboard.js HTTP/1.1[0m" 304 -
+10.215.122.77 - - [23/Feb/2023 03:16:54] "[36mGET /dashboard.css HTTP/1.1[0m" 304 -
+10.215.122.77 - - [23/Feb/2023 03:16:54] "GET /socket.io/?EIO=4&transport=polling&t=OPx68ii HTTP/1.1" 200 -
+10.215.122.77 - - [23/Feb/2023 03:16:54] "POST /socket.io/?EIO=4&transport=polling&t=OPx68jN&sid=0tlQgc0v945qVC80AAAC HTTP/1.1" 200 -
+10.215.122.77 - - [23/Feb/2023 03:16:54] "GET /socket.io/?EIO=4&transport=polling&t=OPx68jO&sid=0tlQgc0v945qVC80AAAC HTTP/1.1" 200 -
+10.215.122.77 - - [23/Feb/2023 03:16:54] "GET /socket.io/?EIO=4&transport=polling&t=OPx68kj&sid=0tlQgc0v945qVC80AAAC HTTP/1.1" 200 -

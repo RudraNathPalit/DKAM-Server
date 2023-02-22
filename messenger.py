@@ -7,6 +7,7 @@ FDO_messageLog = ''
 DMS_messageLog = ''
 THINGSBOARD_messageLog = ''
 BKC_messageLog = ''
+MAX_LENGTH = 7
 
 app = Flask(__name__, template_folder="./templates", static_url_path='', static_folder='./templates')
 app.config["SECRET_KEY"] = "secret!"
@@ -24,18 +25,26 @@ def update_data():
 
     data = request.json
     if data['source'] == 'fdo':
+        if FDO_messageLog.count('<br>') > MAX_LENGTH:
+            FDO_messageLog = ''
         FDO_messageLog = f"{FDO_messageLog}{data['msg']}<br>"
         socketio.emit('update-fdo', {'data': FDO_messageLog})
 
     elif data['source'] == 'dms':
+        if DMS_messageLog.count('<br>') > MAX_LENGTH:
+            DMS_messageLog = ''
         DMS_messageLog = f"{DMS_messageLog}{data['msg']}<br>"
         socketio.emit('update-dms', {'data': DMS_messageLog})
 
     elif data['source'] == 'thingsboard':
+        if THINGSBOARD_messageLog.count('<br>') > MAX_LENGTH:
+            THINGSBOARD_messageLog = ''
         THINGSBOARD_messageLog = f"{THINGSBOARD_messageLog}{data['msg']}<br>"
         socketio.emit('update-thingsboard', {'data': THINGSBOARD_messageLog})
 
     elif data['source'] == 'bkc':
+        if BKC_messageLog.count('<br>') > MAX_LENGTH:
+            BKC_messageLog = ''
         BKC_messageLog = f"{BKC_messageLog}{data['msg']}<br>"
         socketio.emit('update-bkc', {'data': BKC_messageLog})
 

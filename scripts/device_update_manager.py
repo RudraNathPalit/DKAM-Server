@@ -11,7 +11,10 @@ import requests
 import argparse
 import os
 
+# Debug
+MESSENGER_URL = 'http://10.99.115.211:5300'
 
+# Keys
 SW_CHECKSUM_ATTR = "sw_checksum"
 SW_CHECKSUM_ALG_ATTR = "sw_checksum_algorithm"
 SW_SIZE_ATTR = "sw_size"
@@ -74,8 +77,8 @@ def set_client_attributes(software_info):
     return response.status_code == 200
 
 def upgrade(filename, version_from, version_to):
-    # err = subprocess.run(['sudo', sys.executable, filename], stderr=subprocess.PIPE).stderr.decode('utf-8')
     err = subprocess.run(['sudo', 'bash', filename], stderr=subprocess.PIPE).stderr.decode('utf-8')
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': f'Device updated from version {version_from} to {version_to}'})
     print(f'Device updated from version {version_from} to {version_to}', flush=True)
     try:
         os.remove(filename)
@@ -120,6 +123,8 @@ class softwareClient(Client):
         self.subscribe("v1/devices/me/attributes")
         self.subscribe("v2/sw/response/+")
         self.send_telemetry(self.current_software_info)
+        sleep(2)
+
         print('Device connected to Thingsboard', flush=True)
         self.request_software_info()
 
@@ -133,7 +138,10 @@ class softwareClient(Client):
                 self.latest_software_info = software_info 
             if (self.latest_software_info.get(SW_VERSION_ATTR) is not None and self.latest_software_info.get(SW_VERSION_ATTR) != self.current_software_info.get("current_" + SW_VERSION_ATTR)) or \
                     (self.latest_software_info.get(SW_TITLE_ATTR) is not None and self.latest_software_info.get(SW_TITLE_ATTR) != self.current_software_info.get("current_" + SW_TITLE_ATTR)):
+                requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'New Updates available!'})
                 print("New Updates available!", flush=True)
+
+                requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Downloading Updates...'})
                 self.current_software_info[SW_STATE_ATTR] = "DOWNLOADING"
                 self.send_telemetry(self.current_software_info)
                 sleep(1)
@@ -151,10 +159,12 @@ class softwareClient(Client):
                 self.get_software()
 
     def process_software(self):
+        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Updates downloaded'})
         self.current_software_info[SW_STATE_ATTR] = "DOWNLOADED"
         self.send_telemetry(self.current_software_info)
         sleep(1)
         verification_result = verify_checksum(self.software_data, self.latest_software_info.get(SW_CHECKSUM_ALG_ATTR), self.latest_software_info.get(SW_CHECKSUM_ATTR))
+        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Verifying Checksum...'})
         if verification_result:
             print("Checksum verified!", flush=True)
             self.current_software_info[SW_STATE_ATTR] = "VERIFIED"
@@ -182,6 +192,7 @@ class softwareClient(Client):
     def __update_thread(self):
         while True:
             if self.software_received:
+                requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Updating Device...'})
                 self.current_software_info[SW_STATE_ATTR] = "UPDATING"
                 self.send_telemetry(self.current_software_info)
                 sleep(1)

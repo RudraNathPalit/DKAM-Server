@@ -165,7 +165,8 @@ def provisionAutoUpdate():
         print(f'Auto update activated with PID {process_pid}')
             
 def upgrade(filename):
-    err = subprocess.run(['sudo', sys.executable, filename], stderr=subprocess.PIPE).stderr.decode('utf-8')
+    # err = subprocess.run(['sudo', sys.executable, filename], stderr=subprocess.PIPE).stderr.decode('utf-8')
+    err = subprocess.run(['sudo', 'bash', filename], stderr=subprocess.PIPE).stderr.decode('utf-8')
     if err!= '':
         print(err)
         return False

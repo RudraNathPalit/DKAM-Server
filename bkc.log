@@ -10,3 +10,11 @@
  * Debugger PIN: 208-237-809
 10.215.206.214 - - [22/Feb/2023 18:17:27] "GET / HTTP/1.1" 200 -
 10.215.206.214 - - [22/Feb/2023 18:17:27] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/device_update_manager.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 208-237-809
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 208-237-809

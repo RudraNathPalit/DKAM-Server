@@ -74,7 +74,8 @@ def set_client_attributes(software_info):
     return response.status_code == 200
 
 def upgrade(filename, version_from, version_to):
-    err = subprocess.run(['sudo', sys.executable, filename], stderr=subprocess.PIPE).stderr.decode('utf-8')
+    # err = subprocess.run(['sudo', sys.executable, filename], stderr=subprocess.PIPE).stderr.decode('utf-8')
+    err = subprocess.run(['sudo', 'bash', filename], stderr=subprocess.PIPE).stderr.decode('utf-8')
     print(f'Device updated from version {version_from} to {version_to}', flush=True)
     try:
         os.remove(filename)

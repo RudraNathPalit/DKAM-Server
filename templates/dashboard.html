@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Dr SysDebug | An Intelligent Monitoring and Diagnostic Utility" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/dashboard.css">
+    <title>DKAM | Dashboard</title>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script type="text/javascript" src="/dashboard.js"></script>
+    <div id="root">
+        <div class="row-1">
+            <div class="col-1">
+                <h1>FDO Service</h1>
+                <div id="fdo">Initiating Service...</div>
+            </div>
+            <div class="col-2">
+                <h1>DMS Service</h1>
+                <div id="dms">Initiating Service...</div>
+            </div>
+        </div>
+        <div class="row-2">
+            <div class="col-1">
+                <h1>Things Board Service</h1>
+                <div id="thingsboard">Initiating Service...</div>
+            </div>
+            <div class="col-2">
+                <h1>Dynamic BKC Service</h1>
+                <div id="bkc">Initiating Service...</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

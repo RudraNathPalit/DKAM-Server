@@ -49,7 +49,7 @@ def clear_data():
     global BKC_messageLog
 
     data = request.json
-    
+
     if data['source'] == 'fdo':
         FDO_messageLog = ""
 
@@ -95,4 +95,4 @@ def disconnect():
     print('Client disconnected',  request.sid)
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True, port=5300, host="0.0.0.0", use_reloader=False)
+    socketio.run(app, debug=True, port=5300, host="0.0.0.0", use_reloader=False, allow_unsafe_werkzeug=True)

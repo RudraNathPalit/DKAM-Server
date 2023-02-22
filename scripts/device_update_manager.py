@@ -13,6 +13,10 @@ import os
 
 # Debug
 MESSENGER_URL = 'http://10.99.115.211:5300'
+proxies = {
+   'http': '',
+   'https': '',
+}
 
 # Keys
 SW_CHECKSUM_ATTR = "sw_checksum"
@@ -73,12 +77,12 @@ def set_client_attributes(software_info):
         SW_CHECKSUM_ALG_ATTR: str(software_info.get(SW_CHECKSUM_ALG_ATTR)),
         SW_SIZE_ATTR: str(software_info.get(SW_SIZE_ATTR))
     }
-    response = requests.post(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_HTTP_PORT}/api/v1/{TOKEN}/attributes",json=current_software_info)
+    response = requests.post(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_HTTP_PORT}/api/v1/{TOKEN}/attributes",json=current_software_info, proxies=proxies)
     return response.status_code == 200
 
 def upgrade(filename, version_from, version_to):
     err = subprocess.run(['sudo', 'bash', filename], stderr=subprocess.PIPE).stderr.decode('utf-8')
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': f'Device updated from version {version_from} to {version_to}'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': f'Device updated from version {version_from} to {version_to}'}, proxies=proxies)
     print(f'Device updated from version {version_from} to {version_to}', flush=True)
     try:
         os.remove(filename)
@@ -91,7 +95,7 @@ def upgrade(filename, version_from, version_to):
     return True
 
 def get_current_software_info():
-    response = requests.get(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_HTTP_PORT}/api/v1/{TOKEN}/attributes", params={"clientKeys": REQUIRED_SHARED_KEYS})
+    response = requests.get(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_HTTP_PORT}/api/v1/{TOKEN}/attributes", params={"clientKeys": REQUIRED_SHARED_KEYS}, proxies=proxies)
     if response.status_code == 200:
         return loads(response.text).get('client')
     else:
@@ -138,10 +142,10 @@ class softwareClient(Client):
                 self.latest_software_info = software_info 
             if (self.latest_software_info.get(SW_VERSION_ATTR) is not None and self.latest_software_info.get(SW_VERSION_ATTR) != self.current_software_info.get("current_" + SW_VERSION_ATTR)) or \
                     (self.latest_software_info.get(SW_TITLE_ATTR) is not None and self.latest_software_info.get(SW_TITLE_ATTR) != self.current_software_info.get("current_" + SW_TITLE_ATTR)):
-                requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'New Updates available!'})
+                requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'New Updates available!'}, proxies=proxies)
                 print("New Updates available!", flush=True)
 
-                requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Downloading Updates...'})
+                requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Downloading Updates...'}, proxies=proxies)
                 self.current_software_info[SW_STATE_ATTR] = "DOWNLOADING"
                 self.send_telemetry(self.current_software_info)
                 sleep(1)
@@ -159,12 +163,12 @@ class softwareClient(Client):
                 self.get_software()
 
     def process_software(self):
-        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Updates downloaded'})
+        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Updates downloaded'}, proxies=proxies)
         self.current_software_info[SW_STATE_ATTR] = "DOWNLOADED"
         self.send_telemetry(self.current_software_info)
         sleep(1)
         verification_result = verify_checksum(self.software_data, self.latest_software_info.get(SW_CHECKSUM_ALG_ATTR), self.latest_software_info.get(SW_CHECKSUM_ATTR))
-        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Verifying Checksum...'})
+        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Verifying Checksum...'}, proxies=proxies)
         if verification_result:
             print("Checksum verified!", flush=True)
             self.current_software_info[SW_STATE_ATTR] = "VERIFIED"
@@ -192,7 +196,7 @@ class softwareClient(Client):
     def __update_thread(self):
         while True:
             if self.software_received:
-                requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Updating Device...'})
+                requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Updating Device...'}, proxies=proxies)
                 self.current_software_info[SW_STATE_ATTR] = "UPDATING"
                 self.send_telemetry(self.current_software_info)
                 sleep(1)

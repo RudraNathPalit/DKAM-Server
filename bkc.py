@@ -10,6 +10,8 @@ THINGSBOARD_HOST = '10.99.115.211'
 THINGSBOARD_PORT = '8080'
 DMS_PORT = '5055'
 
+# Debug
+MESSENGER_URL = 'http://10.99.115.211:5300'
 proxies = {
   "http": "",
   "https": "",
@@ -22,6 +24,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 def upload_ThingsBoard(title, version, platform, profile):
     # Get Tenant and Profile ids from DMS
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'bkc', 'msg': f'Fetching Thingsboard credentials from DMS...'}, proxies=proxies)
     ids = requests.post(f'http://{DMS_HOST}:{DMS_PORT}/get-bkc-id', json={'profile': profile, 'platform': platform}, proxies=proxies)
     if ids.status_code != 200:
         print('Error fetching ThingsBoard credentials', flush=True)
@@ -33,6 +36,7 @@ def upload_ThingsBoard(title, version, platform, profile):
     url = f'http://{THINGSBOARD_HOST}:{THINGSBOARD_PORT}/api/auth/login'
     headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
     loginJSON = {'username': 'tenant@thingsboard.org', 'password': 'tenant'}
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'bkc', 'msg': f'Generating JWT Token from Thingsboard...'}, proxies=proxies)
     response = requests.post(url, headers=headers, json=loginJSON, proxies=proxies)
     if response.status_code !=200:
         print('Error fetching JWT token', flush=True)
@@ -40,6 +44,7 @@ def upload_ThingsBoard(title, version, platform, profile):
     
     JWT_TOKEN = response.json()['token']
 
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'bkc', 'msg': f'Uploading Installer Script to Thingsboard...'}, proxies=proxies)
     # Create package Metadata
     packageJson = {
         "additionalInfo" : {"description": f"Updates for {platform} {profile}"},
@@ -89,6 +94,7 @@ def upload_ThingsBoard(title, version, platform, profile):
     if res.status_code!= 200:
         print('Error: File upload to ThingsBoard failed.', flush=True)
         return False
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'bkc', 'msg': f'Installation script uploaded to Thingsboard!'}, proxies=proxies)
     return True
 
 
@@ -107,16 +113,20 @@ def updateNew():
     package = url.split('/')[-1]
     version = url[url.find('linux'):].split('/')[0].lstrip('linux-')
     
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'bkc', 'msg': f'New Updates arrieved for {platform} {profile}'}, proxies=proxies)
     
     # Generate Installer File
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'bkc', 'msg': f'Creating Installation Script version {installer_version}...'}, proxies=proxies)
     with open(os.path.join(app.config['INSTALLER'], 'base_installer'), 'rt') as f:
         commands = f.read()
     commands=re.sub('SUBSTITUTE_URL', url, commands)
     commands=re.sub('SUBSTITUTE_PACKAGE', package, commands)
     commands=re.sub('SUBSTITUTE_VERSION', version, commands)
 
+
     with open(os.path.join(app.config['INSTALLER'], f'installer_{platform}_{profile}_{installer_version}'), 'wt') as f:
         f.write(commands)
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'bkc', 'msg': f'Generated installer_{platform}_{profile}_{installer_version}'}, proxies=proxies)
 
     if not upload_ThingsBoard(f'{platform} {profile} Update', installer_version, platform, profile):
         return 'Failed', 501

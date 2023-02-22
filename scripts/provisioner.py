@@ -10,7 +10,7 @@ try:
     import requests
 except:
     err = subprocess.run([sys.executable, '-m', 'pip', 'install', 'requests'], stderr=subprocess.PIPE).stderr.decode('utf-8')
-    if err !='':
+    if err !='' and 'WARNING:' not in err:
         print('Error installing required packages.')
         print(err)
         exit(2)
@@ -20,7 +20,7 @@ try:
     from mmh3 import hash, hash128
 except:
     err = subprocess.run([sys.executable, '-m', 'pip', 'install', 'mmh3'], stderr=subprocess.PIPE).stderr.decode('utf-8')
-    if err !='':
+    if err !='' and 'WARNING:' not in err:
         print('Error installing required packages')
         print(err)
         exit(3)
@@ -28,6 +28,10 @@ except:
 
 # Debug
 MESSENGER_URL = 'http://10.99.115.211:5300'
+proxies = {
+   'http': '',
+   'https': '',
+}
 
 # CLOUD IPs
 THINGSBOARD_HOST = ''
@@ -57,7 +61,7 @@ ENDC = '\033[0m'
 
 def getProvisioningKeys(board, GUID, profile):
 # Fetch Secret key from Database
-    response = requests.post(f'{DMS_HOST}:{DMS_PORT}/get-keys', json = {'platform': board, 'guid': GUID, 'profile': profile})
+    response = requests.post(f'{DMS_HOST}:{DMS_PORT}/get-keys', json = {'platform': board, 'guid': GUID, 'profile': profile}, proxies=proxies)
     if response.status_code != 200:
         return None
     return response.json()
@@ -70,17 +74,17 @@ def registerDevice(device_key, device_secret, board, guid):
         "provisionDeviceSecret": device_secret
     }
 
-    response = requests.post(f'http://{THINGSBOARD_HOST}:{THINGSBOARD_PORT}/api/v1/provision', json = PROVISION_REQUEST)
+    response = requests.post(f'http://{THINGSBOARD_HOST}:{THINGSBOARD_PORT}/api/v1/provision', json = PROVISION_REQUEST, proxies=proxies)
     if response.status_code != 200:
         print(WARNING+'Error: Failed to register device to ThingsBoard.'+ENDC)
         return None
     return response.json().get("credentialsValue")
 
 def send_telemetry(telemetry):
-    requests.post(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_PORT}/api/v1/{TOKEN}/telemetry",json=telemetry)
+    requests.post(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_PORT}/api/v1/{TOKEN}/telemetry",json=telemetry, proxies=proxies)
 
 def get_software_info():
-    response = requests.get(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_PORT}/api/v1/{TOKEN}/attributes", params={"sharedKeys": REQUIRED_SHARED_KEYS})
+    response = requests.get(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_PORT}/api/v1/{TOKEN}/attributes", params={"sharedKeys": REQUIRED_SHARED_KEYS}, proxies=proxies)
     if response.status_code == 200:
         return response.json().get("shared", {})
     else:
@@ -129,7 +133,7 @@ def set_client_attributes(software_info):
         SW_CHECKSUM_ALG_ATTR: str(software_info.get(SW_CHECKSUM_ALG_ATTR)),
         SW_SIZE_ATTR: str(software_info.get(SW_SIZE_ATTR))
     }
-    response = requests.post(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_PORT}/api/v1/{TOKEN}/attributes",json=current_software_info)
+    response = requests.post(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_PORT}/api/v1/{TOKEN}/attributes",json=current_software_info, proxies=proxies)
     return response.status_code == 200
 
 def get_software(sw_info):
@@ -139,7 +143,7 @@ def get_software(sw_info):
                 "size": sw_info.get(SW_SIZE_ATTR, 0),
                 "chunk": 0
             }
-    response = requests.get(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_PORT}/api/v1/{TOKEN}/software", params=params)
+    response = requests.get(f"http://{THINGSBOARD_HOST}:{THINGSBOARD_PORT}/api/v1/{TOKEN}/software", params=params, proxies=proxies)
     if response.status_code != 200:
         print(WARNING+"Error received updates:"+ENDC)
         response.raise_for_status()
@@ -149,9 +153,9 @@ def get_software(sw_info):
 
 def provisionAutoUpdate():
     print('\n')
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Activating Auto Update...'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Activating Auto Update...'}, proxies=proxies)
     print(CYAN+'Activating Auto Update...'+ENDC)
-    response = requests.get(f'{DMS_HOST}:{DMS_PORT}/device-updater')
+    response = requests.get(f'{DMS_HOST}:{DMS_PORT}/device-updater', proxies=proxies)
     if response.status_code != 200:
         print(WARNING+'Error: Failed to provision auto update feature'+ENDC)
     else:
@@ -166,7 +170,7 @@ def provisionAutoUpdate():
                             stderr=fout, 
                             preexec_fn=os.setpgrp).pid
         sleep(2)
-        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': f'Auto update activated with PID {process_pid}'})
+        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': f'Auto update activated with PID {process_pid}'}, proxies=proxies)
         print(f'Auto update activated with PID {process_pid}')
             
 def upgrade(filename):
@@ -187,7 +191,7 @@ if __name__ == '__main__':
     DMS_HOST = f'http://{args.host}'
     DMS_PORT = args.port
 
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'dms', 'msg': 'Installing setup script...'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'dms', 'msg': 'Installing setup script...'}, proxies=proxies)
     print('Initiating Setup Script...')
 
     # Verify Board GUID
@@ -199,7 +203,7 @@ if __name__ == '__main__':
     #  Get secure Provisioning Keys
     profile = input(f'Enter Profile for device {board}_{GUID}:\t').upper()
 
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'dms', 'msg': 'Fetching ThingsBoard Provisioning keys...'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'dms', 'msg': 'Fetching ThingsBoard Provisioning keys...'}, proxies=proxies)
     print('Fetching ThingsBoard Provisioning keys from DMS...')
     keys = getProvisioningKeys(board, GUID, profile)
     sleep(1)
@@ -213,25 +217,25 @@ if __name__ == '__main__':
     THINGSBOARD_MQTT_PORT = keys['thingsboard-mqtt-port']
 
     print('\n')
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Device connecting to Thingsboard...'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Device connecting to Thingsboard...'}, proxies=proxies)
     print(CYAN+'Connecting to Thingsboard...'+ENDC)
 
     sleep(1)
     # Register Device
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Registering device...'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Registering device...'}, proxies=proxies)
     print('Registering device...')
     TOKEN = registerDevice(keys['device-key'], keys['device-secret'], board, GUID)
     if not TOKEN:
         print(WARNING+'Error: Failed to fetch device provisioning token.'+ENDC)
         exit(1)
 
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Saving secure Authentication token...'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Saving secure Authentication token...'}, proxies=proxies)
     print('Saving secure Authentication token...')
     with open('sensitive/access-token', 'w') as f:
         f.write(TOKEN)
     print('Secure Authentication token saved...')
 
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Success: Device registered to Thingsboard!!'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Success: Device registered to Thingsboard!!'}, proxies=proxies)
     print(GREEN+'Success: Device registered to Thingsboard'+ENDC)
     print('\n')
     
@@ -250,7 +254,7 @@ if __name__ == '__main__':
 
     
     # Check for Updated Software Bundle
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': "Checking for Updates from ThingsBoard..."})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': "Checking for Updates from ThingsBoard..."}, proxies=proxies)
     print(CYAN+"Checking for Updates from ThingsBoard..." + ENDC)
     software_info = get_software_info()
     if not software_info:
@@ -259,16 +263,16 @@ if __name__ == '__main__':
 
     elif (software_info.get(SW_VERSION_ATTR) is None or software_info.get(SW_VERSION_ATTR) == current_software_info.get("current_" + SW_VERSION_ATTR)) \
             or (software_info.get(SW_TITLE_ATTR) is None or software_info.get(SW_TITLE_ATTR) == current_software_info.get("current_" + SW_TITLE_ATTR)):
-        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'No Update available!'})
+        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'No Update available!'}, proxies=proxies)
         print('No Update available!')
         provisionAutoUpdate()
         exit(0)
 
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': "New Updates available!"})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': "New Updates available!"}, proxies=proxies)
     print(BLUE+"New Updates available!"+ENDC)
 
     #  Start Downloading Updated Software
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Downloading Update Installation script...'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Downloading Update Installation script...'}, proxies=proxies)
     print('Downloading Update Installation script...')
     current_software_info[SW_STATE_ATTR] = "DOWNLOADING"
     sleep(1)
@@ -276,14 +280,14 @@ if __name__ == '__main__':
     software_data = get_software(software_info)
     
     # Complete Downloading Software Data
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Completed downloading Update Installation Script'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Completed downloading Update Installation Script'}, proxies=proxies)
     print('Completed downloading Update Installation Script')
     current_software_info[SW_STATE_ATTR] = "DOWNLOADED"
     sleep(1)
     send_telemetry(current_software_info)
 
     # Verify File Checksum
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Verifying Update Integrity...'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Verifying Update Integrity...'}, proxies=proxies)
     print('Verifying Update Integrity...')
     verification_result = verify_checksum(software_data, software_info.get(SW_CHECKSUM_ALG_ATTR), software_info.get(SW_CHECKSUM_ATTR))
     if verification_result:
@@ -303,7 +307,7 @@ if __name__ == '__main__':
         software_file.write(software_data)
 
     # Start Updates
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Invoking Update Installtion Script...'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Invoking Update Installtion Script...'}, proxies=proxies)
     print('Invoking Update Installtion Script...')
     current_software_info[SW_STATE_ATTR] = "UPDATING"
     sleep(1)
@@ -313,7 +317,7 @@ if __name__ == '__main__':
         print(WARNING+'Error: Failed to Upgrade System'+ENDC)
         exit(5)
 
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Success: System updated!!'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Success: System updated!!'}, proxies=proxies)
     print(GREEN+'Success: System updated!'+ENDC)
     current_software_info = {
             "current_" + SW_TITLE_ATTR: software_info.get(SW_TITLE_ATTR),
@@ -333,5 +337,5 @@ if __name__ == '__main__':
         exit(6)
     provisionAutoUpdate()
     sleep(2)
-    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Done!'})
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Done!'}, proxies=proxies)
     print(GREEN+'Done!'+ENDC)

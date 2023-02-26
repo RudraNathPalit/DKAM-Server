@@ -162,19 +162,33 @@ def provisionAutoUpdate():
         with open("/bin/device_update_manager.py", "wb") as f:
             f.write(response.content)
         
-        with open('/tmp/chrontab_backup', 'w') as f:
-            process = subprocess.run(['sudo', 'crontab', '-l'], stdout=f)
+        service = f'''
+        [Unit]
+        Description=DKAM Auto System Updater
+        After=multi-user.target
 
-        job = '@reboot python3 /bin/device_update_manager.py > /var/log/dkam_auto_update_log &\n'
-        with open('/tmp/chrontab_backup', 'a+') as f:
-            text = f.read()
-            if job not in text:
-                f.write(job)
-        os.system('sudo crontab /tmp/chrontab_backup')
+        [Service]
+        Type=simple
+        StandardOutput=file:/var/log/dkam_updater_out.log
+        StandardError=file:/var/log/dkam_updater_error.log
+        Restart=always
+        ExecStart=/usr/bin/python3 /bin/device_update_manager.py --host {THINGSBOARD_HOST} --http {THINGSBOARD_PORT} --mqtt {THINGSBOARD_MQTT_PORT} --token {TOKEN}
+
+        [Install]
+        WantedBy=multi-user.target
+        '''
+
+        with open('/etc/systemd/system/dkam.service', 'w') as f:
+            f.write(service)
+
+
+        os.system('sudo systemctl daemon-reload')
+        os.system('sudo systemctl enable dkam.service')
+        os.system('sudo systemctl start dkam.service')
 
         sleep(2)
-        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': f'Auto update Cron Job created'}, proxies=proxies)
-        print(f'Auto update activated Cron Job created')
+        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': f'Auto update DKAM service created'}, proxies=proxies)
+        print(f'Auto update dkam service created')
             
 def upgrade(filename):
     subprocess.run(['sudo', 'bash', filename])

@@ -1,0 +1,75 @@
+ * Serving Flask app 'rv_server'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5100
+ * Running on http://10.99.115.211:5100
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+cef4804e4c371bc53f6ca93806a1d111be1f9a2f28fcb9e6c110d1c64c7bfa23
+cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
+10.99.115.134 - - [26/Feb/2023 17:44:36] "POST /verify HTTP/1.1" 200 -
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/device_update_manager.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+ * Detected change in '/home/rudra/Documents/Provisioner/experiment.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+ * Detected change in '/home/rudra/Documents/Provisioner/experiment.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+ * Detected change in '/home/rudra/Documents/Provisioner/experiment.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/device_update_manager.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+10.108.202.41 - - [26/Feb/2023 21:02:54] "[33mGET /index.asp HTTP/1.1[0m" 404 -
+cef4804e4c371bc53f6ca93806a1d111be1f9a2f28fcb9e6c110d1c64c7bfa23
+cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
+10.99.115.134 - - [26/Feb/2023 21:18:00] "POST /verify HTTP/1.1" 200 -
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788
+cef4804e4c371bc53f6ca93806a1d111be1f9a2f28fcb9e6c110d1c64c7bfa23
+cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
+10.99.115.134 - - [26/Feb/2023 21:19:29] "POST /verify HTTP/1.1" 200 -
+cef4804e4c371bc53f6ca93806a1d111be1f9a2f28fcb9e6c110d1c64c7bfa23
+cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
+10.99.115.134 - - [26/Feb/2023 21:21:00] "POST /verify HTTP/1.1" 200 -
+ * Detected change in '/home/rudra/Documents/Provisioner/dms.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 375-197-788

@@ -24,5 +24,8 @@ sudo sed -i 's/GRUB_DEFAULT=.*/GRUB_DEFAULT="'$menu_id'>'$submenu_id'"/' /etc/de
 # Update GRUB
 sudo update-grub
 
+# Clean up files
+rm -rf $package
+
 # Reboot device
-sudo reboot
+# sudo reboot

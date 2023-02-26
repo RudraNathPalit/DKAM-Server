@@ -1,15 +1,45 @@
-from paho.mqtt.client import Client
 from time import sleep
 from json import dumps, loads
 from zlib import crc32
 from hashlib import sha256, sha384, sha512, md5
-from mmh3 import hash, hash128
 from threading import Thread
 import subprocess
 import sys
-import requests
 import argparse
 import os
+
+sys.stdout = open('/var/log/dkam_mqtt.log', 'w')
+try:
+    import requests
+except:
+    err = subprocess.run([sys.executable, '-m', 'pip', 'install', 'requests'], stderr=subprocess.PIPE).stderr.decode('utf-8')
+    if err !='' and 'WARNING:' not in err:
+        print('Error installing required packages.')
+        print(err)
+        exit(2)
+    import requests
+
+try:
+    from mmh3 import hash, hash128
+except:
+    err = subprocess.run([sys.executable, '-m', 'pip', 'install', 'mmh3'], stderr=subprocess.PIPE).stderr.decode('utf-8')
+    if err !='' and 'WARNING:' not in err:
+        print('Error installing required packages')
+        print(err)
+        exit(3)
+    from mmh3 import hash, hash128
+
+try:
+    from paho.mqtt.client import Client
+
+except:
+    print(sys.executable)
+    err = subprocess.run([sys.executable, '-m', 'pip', 'install', 'paho-mqtt'], stderr=subprocess.PIPE).stderr.decode('utf-8')
+    if err !='' and 'WARNING:' not in err:
+        print('Error installing required packages.')
+        print(err)
+        exit(2)
+    from paho.mqtt.client import Client
 
 # Debug
 MESSENGER_URL = 'http://10.99.115.211:5300'
@@ -89,9 +119,6 @@ def upgrade(filename, version_from, version_to):
     except:
         pass
     
-    # if err!= '':
-    #     print(err, flush=True)
-    #     return False
     return True
 
 def get_current_software_info():

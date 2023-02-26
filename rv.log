@@ -650,3 +650,48 @@ cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
  * Restarting with stat
  * Debugger is active!
  * Debugger PIN: 486-010-554
+ * Detected change in '/home/rudra/Documents/Provisioner/kernel_update.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 486-010-554
+ * Detected change in '/home/rudra/Documents/Provisioner/kernel_update.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 486-010-554
+cef4804e4c371bc53f6ca93806a1d111be1f9a2f28fcb9e6c110d1c64c7bfa23
+cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
+10.99.115.131 - - [23/Feb/2023 10:36:20] "POST /verify HTTP/1.1" 200 -
+cef4804e4c371bc53f6ca93806a1d111be1f9a2f28fcb9e6c110d1c64c7bfa23
+cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
+10.99.115.131 - - [23/Feb/2023 10:41:32] "POST /verify HTTP/1.1" 200 -
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 486-010-554
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 486-010-554
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/device_update_manager.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 486-010-554
+cef4804e4c371bc53f6ca93806a1d111be1f9a2f28fcb9e6c110d1c64c7bfa23
+cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
+10.99.115.131 - - [23/Feb/2023 12:55:46] "POST /verify HTTP/1.1" 200 -
+cef4804e4c371bc53f6ca93806a1d111be1f9a2f28fcb9e6c110d1c64c7bfa23
+cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
+10.99.115.131 - - [23/Feb/2023 14:59:13] "POST /verify HTTP/1.1" 200 -
+cef4804e4c371bc53f6ca93806a1d111be1f9a2f28fcb9e6c110d1c64c7bfa23
+cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
+10.99.115.134 - - [26/Feb/2023 14:27:41] "POST /verify HTTP/1.1" 200 -
+cef4804e4c371bc53f6ca93806a1d111be1f9a2f28fcb9e6c110d1c64c7bfa23
+cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
+10.99.115.134 - - [26/Feb/2023 14:28:16] "POST /verify HTTP/1.1" 200 -
+cef4804e4c371bc53f6ca93806a1d111be1f9a2f28fcb9e6c110d1c64c7bfa23
+cdc08935-9e97-4e5b-9ab6-94d5e5c4aa26
+10.99.115.134 - - [26/Feb/2023 14:58:06] "POST /verify HTTP/1.1" 200 -
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 486-010-554

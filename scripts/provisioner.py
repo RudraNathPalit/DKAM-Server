@@ -159,25 +159,25 @@ def provisionAutoUpdate():
     if response.status_code != 200:
         print(WARNING+'Error: Failed to provision auto update feature'+ENDC)
     else:
-        open("device_update_manager.py", "wb").write(response.content)
-        fout = open('sensitive/auto_update_log.txt', 'w')
-        process_pid = subprocess.Popen(['sudo', sys.executable, 'device_update_manager.py', 
-                            '--host', THINGSBOARD_HOST, 
-                            '--http', THINGSBOARD_PORT, 
-                            '--mqtt', THINGSBOARD_MQTT_PORT, 
-                            '--token', TOKEN], 
-                            stdout=fout,
-                            stderr=fout, 
-                            preexec_fn=os.setpgrp).pid
+        with open("/bin/device_update_manager.py", "wb") as f:
+            f.write(response.content)
+        
+        with open('/tmp/chrontab_backup', 'w') as f:
+            process = subprocess.run(['sudo', 'crontab', '-l'], stdout=f)
+
+        job = '@reboot python3 /bin/device_update_manager.py > /var/log/dkam_auto_update_log &\n'
+        with open('/tmp/chrontab_backup', 'a+') as f:
+            text = f.read()
+            if job not in text:
+                f.write(job)
+        os.system('sudo crontab /tmp/chrontab_backup')
+
         sleep(2)
-        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': f'Auto update activated with PID {process_pid}'}, proxies=proxies)
-        print(f'Auto update activated with PID {process_pid}')
+        requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': f'Auto update Cron Job created'}, proxies=proxies)
+        print(f'Auto update activated Cron Job created')
             
 def upgrade(filename):
-    err = subprocess.run(['sudo', 'bash', filename], stderr=subprocess.PIPE).stderr.decode('utf-8')
-    if err!= '':
-        print(err)
-        return False
+    subprocess.run(['sudo', 'bash', filename])
     return True
 
 if __name__ == '__main__':
@@ -200,6 +200,7 @@ if __name__ == '__main__':
         GUID = secure_data[4]
         board = secure_data[6]
 
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'dms', 'msg': 'Enter device profile...'}, proxies=proxies)
     #  Get secure Provisioning Keys
     profile = input(f'Enter Profile for device {board}_{GUID}:\t').upper()
 
@@ -339,3 +340,6 @@ if __name__ == '__main__':
     sleep(2)
     requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Done!'}, proxies=proxies)
     print(GREEN+'Done!'+ENDC)
+
+    requests.post(f'{MESSENGER_URL}/update-data', json={'source': 'thingsboard', 'msg': 'Rebooting device'}, proxies=proxies)
+    os.system('sudo reboot')

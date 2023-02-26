@@ -89,9 +89,9 @@ def upgrade(filename, version_from, version_to):
     except:
         pass
     
-    if err!= '':
-        print(err, flush=True)
-        return False
+    # if err!= '':
+    #     print(err, flush=True)
+    #     return False
     return True
 
 def get_current_software_info():
@@ -217,6 +217,7 @@ class softwareClient(Client):
                 if set_client_attributes(self.latest_software_info):
                     print('Current client attributes updated', flush=True)
                 sleep(1)
+                os.system('sudo reboot')
 
 
 if __name__ == '__main__':

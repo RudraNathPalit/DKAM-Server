@@ -7,190 +7,34 @@
 [33mPress CTRL+C to quit[0m
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 208-237-809
-10.215.206.214 - - [22/Feb/2023 18:17:27] "GET / HTTP/1.1" 200 -
-10.215.206.214 - - [22/Feb/2023 18:17:27] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+ * Debugger PIN: 793-202-000
+ * Detected change in '/home/rudra/Documents/Provisioner/kernel_update.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 793-202-000
+ * Detected change in '/home/rudra/Documents/Provisioner/kernel_update.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 793-202-000
+10.99.115.211 - - [23/Feb/2023 10:34:14] "POST /update-new HTTP/1.1" 200 -
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 793-202-000
+ * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 793-202-000
  * Detected change in '/home/rudra/Documents/Provisioner/scripts/device_update_manager.py', reloading
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 208-237-809
+ * Debugger PIN: 793-202-000
+10.99.115.131 - - [23/Feb/2023 12:54:10] "POST /update-new HTTP/1.1" 200 -
+10.99.115.131 - - [23/Feb/2023 14:57:53] "POST /update-new HTTP/1.1" 200 -
+10.99.115.134 - - [26/Feb/2023 14:36:05] "POST /update-new HTTP/1.1" 200 -
+10.99.115.134 - - [26/Feb/2023 14:53:53] "POST /update-new HTTP/1.1" 200 -
+10.99.115.134 - - [26/Feb/2023 14:57:02] "POST /update-new HTTP/1.1" 200 -
  * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/experiment_3.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/messenger.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/scripts/device_update_manager.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/scripts/provisioner.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/bkc.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/bkc.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/bkc.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
- * Detected change in '/home/rudra/Documents/Provisioner/bkc.py', reloading
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 208-237-809
+ * Debugger PIN: 793-202-000

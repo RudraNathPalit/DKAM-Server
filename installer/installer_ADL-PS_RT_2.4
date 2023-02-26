@@ -1,7 +1,7 @@
 #!/usr/bin/bash
-url=SUBSTITUTE_URL
-package=SUBSTITUTE_PACKAGE
-version=SUBSTITUTE_VERSION
+url=http://oak-07.jf.intel.com/ikt_kernel_deb_repo/pool/main/l/linux-5.15.85-lts-bullpen-230113t035248z/linux-image-5.15.85-lts-bullpen-230113t035248z_5.15.85-16_amd64.deb
+package=linux-image-5.15.85-lts-bullpen-230113t035248z_5.15.85-16_amd64.deb
+version=5.15.85-lts-bullpen-230113t035248z
 
 # Download the Kernel
 wget $url
@@ -24,8 +24,5 @@ sudo sed -i 's/GRUB_DEFAULT=.*/GRUB_DEFAULT="'$menu_id'>'$submenu_id'"/' /etc/de
 # Update GRUB
 sudo update-grub
 
-# Clean up files
-rm -rf $package
-
 # Reboot device
-# sudo reboot
+sudo reboot
